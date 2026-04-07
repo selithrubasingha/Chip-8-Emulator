@@ -17,3 +17,14 @@ class Chip8
 
 
 };
+
+
+class Chip8 {
+public:
+    // ... your registers and memory go here ...
+
+    // ADD THIS LINE:
+    void LoadROM(char const* filename); 
+
+    // ... timers, video, etc. ...
+}; // <--- The class ends here
