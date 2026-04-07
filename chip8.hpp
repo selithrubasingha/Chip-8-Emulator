@@ -15,6 +15,7 @@ class Chip8
         uint8_t keypad[16]{};
         uint16_t opcode;
 
+        Chip8();
         void LoadROM(char const* filename);
 
 

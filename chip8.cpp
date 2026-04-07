@@ -2,6 +2,12 @@
 #include "chip8.hpp";
 const unsigned int START_ADDRESS = 0x200;
 
+
+Chip8::Chip8() {
+    // initializing the PC to 200 (cause that is where the instructions start )
+    pc = START_ADDRESS;   
+}
+
 /// @brief loads the instruction set into the memory
 /// @param filename 
 void Chip8::LoadROM(char const* filename){
