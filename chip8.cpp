@@ -2,6 +2,8 @@
 #include "chip8.hpp";
 const unsigned int START_ADDRESS = 0x200;
 
+/// @brief loads the instruction set into the memory
+/// @param filename 
 void Chip8::LoadROM(char const* filename){
 
     //open the file and move the cursor to the end of file
