@@ -1,5 +1,8 @@
 #include <cstdint>
 
+const unsigned int FONTSET_SIZE = 80;
+const unsigned int FONTSET_START_ADDRESS = 0x50;
+
 class Chip8
 {
     public :
