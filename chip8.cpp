@@ -115,4 +115,14 @@ void Chip8::OP_3xkk(){
     }
 }
 
+/// @brief skip next instruction if Vx != kk
+void Chip8::OP_4xkk(){
+    uint16_t Vx = (opcode && 0x0F00u);
+    uint16_t byte = (opcode & 0x00FFu);
+
+    if ( registers[Vx] != byte){
+        pc+=2;
+    }
+}
+
     
