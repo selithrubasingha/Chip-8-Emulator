@@ -230,6 +230,22 @@ void Chip8::OP_8xy6(){
 
 }
 
+/// @brief set Vx = Vy - Vx, set VF = NOT borrow
+/// @note same as SUB Vx,Vy , but its Vy-Vx * (not the other way around)
+void Chip8::OP_8xy7(){
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+
+    if ( registers[Vy] > registers[Vx]){
+        registers[0xF] = 1; // no borrow
+    }else{
+        registers[0xF] = 0; // borrow
+    }
+
+    registers[Vx] = registers[Vy] - registers[Vx];
+}
+
+
 
 
 
