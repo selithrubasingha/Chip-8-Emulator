@@ -93,3 +93,15 @@ void Chip8::OP_1nnn(){
     // that blocks the first digit ( the 1), and the Fs act like open
     // windows that let the address (nnn) pass through perfectly.
 }
+
+/// @brief call subroutine at nnn
+/// @note store the current pc adress in the stack and then increment the stack pointer ...
+void Chip8::OP_2nnn(){
+    uint16_t address = opcode & 0x0FFFu;
+
+    stack[sp]  = pc;
+    sp++;
+    pc = address ; 
+
+
+}
