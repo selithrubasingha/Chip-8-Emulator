@@ -245,6 +245,18 @@ void Chip8::OP_8xy7(){
     registers[Vx] = registers[Vy] - registers[Vx];
 }
 
+/// @brief set Vx = Vx SHL 1
+/// @note If the most-significant bit of Vx is 1, then VF is set to 1, otherwise to 0. Then Vx is multiplied by 2.
+void Chip8::OP_8xyE(){
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+
+    //save the MSB into the flag register VF
+    registers[0xF] = (registers[Vx] & 0x80u) >> 7u;
+
+    //multiply the number by 2 ( shift left by 1 !)(shifting to the left does the same thing as multiplying by 2 !!!) 
+    registers[Vx] = registers[Vx] << 1;
+
+}
 
 
 
