@@ -145,6 +145,14 @@ void Chip8::OP_6xkk(){
 
 }
 
+/// @brief set Vx = Vx + kk
+void Chip8::OP_7xkk(){
+    uint16_t Vx = (opcode && 0x0F00u);
+    uint16_t byte = (opcode & 0x00FFu);
+
+    registers[Vx] += byte;
+}
+
 
 
     
