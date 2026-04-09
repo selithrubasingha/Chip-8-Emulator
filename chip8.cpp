@@ -177,6 +177,14 @@ void Chip8::OP_8xy2(){
     registers[Vx]  = registers[Vx] & registers[Vy];
 }
 
+/// @brief set Vx = Vx XOR Vy
+void Chip8::OP_8xy3(){
+    uint16_t Vx = (opcode && 0x0F00u);
+    uint16_t Vy = (opcode && 0x00F0u);
+
+    registers[Vx]  = registers[Vx] ^ registers[Vy];
+}
+
 
 
 
