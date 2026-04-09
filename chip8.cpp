@@ -107,7 +107,7 @@ void Chip8::OP_2nnn(){
 /// @brief skip next instruction if Vx = kk
 ///@note The Vx is the register name and kk is the byte value (the 1 byte value in memory)
 void Chip8::OP_3xkk(){
-    uint16_t Vx = (opcode && 0x0F00u);
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u; // we need to shift it to the right by 8 bits to get the value of x (the register number)
     uint16_t byte = (opcode & 0x00FFu);
 
     if ( registers[Vx] == byte){
@@ -117,7 +117,7 @@ void Chip8::OP_3xkk(){
 
 /// @brief skip next instruction if Vx != kk
 void Chip8::OP_4xkk(){
-    uint16_t Vx = (opcode && 0x0F00u);
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
     uint16_t byte = (opcode & 0x00FFu);
 
     if ( registers[Vx] != byte){
@@ -128,8 +128,8 @@ void Chip8::OP_4xkk(){
 /// @brief skip next instruction if Vx = Vy
 ///@note case where Vx and Vy are both variables and they are the same ...
 void Chip8::OP_5xy0(){
-    uint16_t Vx = (opcode && 0x0F00u);
-    uint16_t Vy = (opcode && 0x00F0u);
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
 
     if ( registers[Vx] == registers[Vy]){
         pc+=2;
@@ -138,7 +138,7 @@ void Chip8::OP_5xy0(){
 
 /// @brief set Vx = kk
 void Chip8::OP_6xkk(){
-    uint16_t Vx = (opcode && 0x0F00u);
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
     uint16_t byte = (opcode & 0x00FFu);
 
     registers[Vx] = byte;
@@ -147,7 +147,7 @@ void Chip8::OP_6xkk(){
 
 /// @brief set Vx = Vx + kk
 void Chip8::OP_7xkk(){
-    uint16_t Vx = (opcode && 0x0F00u);
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
     uint16_t byte = (opcode & 0x00FFu);
 
     registers[Vx] += byte;
@@ -155,32 +155,32 @@ void Chip8::OP_7xkk(){
 
 /// @brief set Vx = Vy
 void Chip8::OP_8xy0(){
-    uint16_t Vx = (opcode && 0x0F00u);
-    uint16_t Vy = (opcode && 0x00F0u);
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
 
     registers[Vx] = registers[Vy];
 }
 
 /// @brief set Vx = Vx OR Vy
 void Chip8::OP_8xy1(){
-    uint16_t Vx = (opcode && 0x0F00u);
-    uint16_t Vy = (opcode && 0x00F0u);
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
 
     registers[Vx]  = registers[Vx] | registers[Vy];
 }
 
 /// @brief set Vx = Vx AND Vy
 void Chip8::OP_8xy2(){
-    uint16_t Vx = (opcode && 0x0F00u);
-    uint16_t Vy = (opcode && 0x00F0u);  
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
 
     registers[Vx]  = registers[Vx] & registers[Vy];
 }
 
 /// @brief set Vx = Vx XOR Vy
 void Chip8::OP_8xy3(){
-    uint16_t Vx = (opcode && 0x0F00u);
-    uint16_t Vy = (opcode && 0x00F0u);
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
 
     registers[Vx]  = registers[Vx] ^ registers[Vy];
 }
