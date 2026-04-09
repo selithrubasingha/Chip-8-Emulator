@@ -267,6 +267,15 @@ void Chip8::OP_9xy0(){
     }
 }
 
+/// @brief set I = nnn
+/// @note the index register is used to store memory addresses . (cause it's 16 bits) , 
+void Chip8::OP_Annn(){
+
+    uint16_t address = opcode & 0x0FFFu;
+
+    index = address;
+}
+
 
 
 
