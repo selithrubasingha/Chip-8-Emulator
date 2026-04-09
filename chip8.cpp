@@ -217,6 +217,19 @@ void Chip8::OP_8xy5(){
     registers[Vx] = registers[Vx] - registers[Vy];
 }
 
+/// @brief set Vx = Vx SHR 1
+/// @note we need to save the least significant bit before shifting to the right because it will be lost after the shift and we need it for the flag register VF
+void Chip8::OP_8xy6(){
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+
+    //save the LSB into the flag register VF
+    registers[0xF] = registers[Vx] & 0x1u;
+
+    //devide the number by 2 ( shift right by 1 !)(shifting to the right does the same thing as dividing by 2 !!!) 
+    registers[Vx] = registers[Vx] >> 1;
+
+}
+
 
 
 
