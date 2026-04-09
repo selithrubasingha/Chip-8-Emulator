@@ -258,6 +258,15 @@ void Chip8::OP_8xyE(){
 
 }
 
+/// @brief skip next instruction if Vx != Vy
+void Chip8::OP_9xy0(){
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    if ( registers[Vx] != registers[Vy]){
+        pc+=2;
+    }
+}
+
 
 
 
