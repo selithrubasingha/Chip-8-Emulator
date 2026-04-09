@@ -68,3 +68,7 @@ void Chip8::LoadROM(char const* filename){
     }
 }
 
+//ALL THE 34 INSTRUCTION IN THE BASE CHIP 8
+void Chip8::OP_00E0(){
+    
+}
