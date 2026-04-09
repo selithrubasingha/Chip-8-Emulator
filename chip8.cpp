@@ -125,4 +125,15 @@ void Chip8::OP_4xkk(){
     }
 }
 
+/// @brief skip next instruction if Vx = Vy
+///@note case where Vx and Vy are both variables and they are the same ...
+void Chip8::OP_5xy0(){
+    uint16_t Vx = (opcode && 0x0F00u);
+    uint16_t Vy = (opcode && 0x00F0u);
+
+    if ( registers[Vx] == registers[Vy]){
+        pc+=2;
+    }
+}
+
     
