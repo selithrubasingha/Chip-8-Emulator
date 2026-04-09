@@ -2,6 +2,8 @@
 #include <chrono>
 #include <random>
 #include "chip8.hpp"
+#include <cstring>
+
 const unsigned int START_ADDRESS = 0x200;
 
 /// @brief font array : literally has the on and off pixels for the letters and numbers
@@ -69,6 +71,9 @@ void Chip8::LoadROM(char const* filename){
 }
 
 //ALL THE 34 INSTRUCTION IN THE BASE CHIP 8
+
+/// @brief clear the display
 void Chip8::OP_00E0(){
-    
+        memset(video, 0, sizeof(video));
 }
+

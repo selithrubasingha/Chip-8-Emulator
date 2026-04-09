@@ -28,7 +28,7 @@ class Chip8
         std::uniform_int_distribution<uint8_t> randByte;
 
         //34 instructions
-void OP_00E0(); // CLS
+        void OP_00E0(); // CLS
         void OP_00EE(); // RET
 
         void OP_1nnn(); // JP addr
