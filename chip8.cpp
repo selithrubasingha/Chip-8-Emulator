@@ -102,6 +102,17 @@ void Chip8::OP_2nnn(){
     stack[sp]  = pc;
     sp++;
     pc = address ; 
-
-
 }
+
+/// @brief skip next instruction if Vx = kk
+///@note The Vx is the register name and kk is the byte value (the 1 byte value in memory)
+void Chip8::OP_3xkk(){
+    uint16_t Vx = (opcode && 0x0F00u);
+    uint16_t byte = (opcode & 0x00FFu);
+
+    if ( registers[Vx] == byte){
+        pc+=2;
+    }
+}
+
+    
