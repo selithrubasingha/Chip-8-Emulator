@@ -35,6 +35,9 @@ Chip8::Chip8()
     for (unsigned int i = 0 ; i<FONTSET_SIZE ; ++i){
         memory[FONTSET_START_ADDRESS + i ] = fontset[i];
     }
+
+    //initialize the random number generator 
+    randByte = std::uniform_int_distribution<uint8_t>(0,255U);
 }
 
 /// @brief loads the instruction set into the memory
@@ -64,3 +67,4 @@ void Chip8::LoadROM(char const* filename){
         delete[] buffer;
     }
 }
+

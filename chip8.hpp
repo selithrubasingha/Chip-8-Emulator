@@ -1,4 +1,6 @@
 #include <cstdint>
+#include <chrono>
+#include <random>
 
 const unsigned int FONTSET_SIZE = 80;
 const unsigned int FONTSET_START_ADDRESS = 0x50;
@@ -12,7 +14,7 @@ class Chip8
         uint16_t pc{};
         uint16_t stack[16];
         uint8_t sp{};
-        uint8_t SoundTimer{};
+        uint8_t soundTimer{};
         uint8_t delayTimer{};
         uint32_t video[64*32]{};
         uint8_t keypad[16]{};
