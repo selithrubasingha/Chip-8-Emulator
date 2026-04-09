@@ -201,6 +201,21 @@ void Chip8::OP_8xy4(){
     registers[Vx] = sum & 0xFFu; // we need to get the last 8 bits of the sum (cause the register can only hold 8 bits)
 }
 
+/// @brief set Vx = Vx - Vy, set VF = NOT borrow
+/// @note if Vx > Vy then there is no borrow and we set VF to 1 else we set it to 0 , in this case the VF register acts as a NOT burrow flag 
+void Chip8::OP_8xy5(){
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;    
+
+    //NOTE that no burrow makes the flag 1 , it's easier for the computer logic that way becasue of 2's complement and stuff
+    if ( registers[Vx] > registers[Vy]){
+        registers[0xF] = 1; // no borrow
+    }else{
+        registers[0xF] = 0; // borrow   
+    }   
+
+    registers[Vx] = registers[Vx] - registers[Vy];
+}
 
 
 
