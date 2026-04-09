@@ -273,10 +273,20 @@ void Chip8::OP_Annn(){
 
     uint16_t address = opcode & 0x0FFFu;
 
+    //the index and PC are both adress storers .
+    //BUT  index stores the adress for data needed currently 
+    //while PC stores the the address for the next instruction to execute
     index = address;
 }
 
 
+/// @brief jump to location nnn + V0
+void Chip8::OP_Bnnn(){
+    uint16_t address = opcode & 0x0FFFu;
+
+    pc = registers[0] + address;
+
+}
 
 
 
