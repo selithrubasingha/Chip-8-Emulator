@@ -84,3 +84,12 @@ void Chip8::OP_00EE(){
     pc = stack[sp];
 }
 
+/// @brief jump to location nnn
+void Chip8::OP_1nnn(){
+    uint16_t address = opcode & 0x0FFFu; // hear from opcode 1250 we extract 250 cause that's the adress
+    pc = address;
+
+    // When you "AND" them together, the 0 at the front acts like a wall
+    // that blocks the first digit ( the 1), and the Fs act like open
+    // windows that let the address (nnn) pass through perfectly.
+}
