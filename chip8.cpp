@@ -77,3 +77,10 @@ void Chip8::OP_00E0(){
         memset(video, 0, sizeof(video));
 }
 
+/// @brief return from a subroutine
+void Chip8::OP_00EE(){
+    // literally just popping from the stack 
+    sp--;
+    pc = stack[sp];
+}
+
