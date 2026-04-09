@@ -185,6 +185,22 @@ void Chip8::OP_8xy3(){
     registers[Vx]  = registers[Vx] ^ registers[Vy];
 }
 
+/// @brief set Vx = Vx + Vy, set VF = carry
+/// @note note the 16th register is conventionally used for different flags in this case the carrry flag
+void Chip8::OP_8xy4(){
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+
+    uint16_t sum = registers[Vx] + registers[Vy];
+    if ( sum > 255U){
+        registers[0xF] = 1; // carry
+    }else{
+        registers[0xF] = 0;
+    }
+
+    registers[Vx] = sum & 0xFFu; // we need to get the last 8 bits of the sum (cause the register can only hold 8 bits)
+}
+
 
 
 
