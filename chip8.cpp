@@ -509,3 +509,12 @@ void Chip8::OP_Fx33(){
     //ones digit
     memory[index + 2] = value % 10;
 }
+
+/// @brief store registers V0 through Vx in memory starting at location I
+void Chip8::OP_Fx55(){
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+    for (uint8_t i = 0; i <= Vx ; i++){
+        memory[index + i] = registers[i];
+    }
+}
