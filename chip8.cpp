@@ -363,4 +363,20 @@ void Chip8::OP_ExA1(){
 
 }
 
+/// @brief set Vx = delay timer value
+/// @note get the current Delaytime !
+void Chip8::OP_Fx07(){
+    /*
+    here is the thing imagine we want to get the delayTImer value ... we first need to store that delay timer in some register
+    , thereafter we can use that value in the register . whAT we give as F is the register we need to sotre the delay timer !
+    */
+
+    /// set the Vx as the F data
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+    // store the data current delay TImer in a register Vx
+    registers[Vx] = delayTimer;
+
+}
+
     
