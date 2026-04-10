@@ -465,7 +465,7 @@ void Chip8::OP_ExA1(){
     uint8_t Vx = (opcode & 0x0F00u) >>8u;
     uint8_t key = registers[Vx] ;
 
-    uint8_t key = registers[Vx] ;
+
 
     if (!keypad[key]){
         pc+=2;

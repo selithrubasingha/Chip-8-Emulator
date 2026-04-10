@@ -1,6 +1,7 @@
 #ifndef PLATFORM_HPP
 #define PLATFORM_HPP
 
+#include "platform.hpp"
 #include <SDL2/SDL.h>
 #include <cstdint>
 
