@@ -493,3 +493,19 @@ void Chip8::OP_Fx29(){
     //each sprite is 5 bytes long and they start at the address 0x50
     index = FONTSET_START_ADDRESS + (registers[Vx] * 5);
 }
+
+/// @brief store BCD representation of Vx in memory locations I, I+1, and I+2
+void Chip8::OP_Fx33(){
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+    //the value is stored in Vx address 0 < value < 255
+    uint8_t value = registers[Vx];
+
+    //hundreds digit
+    memory[index] = value / 100;
+
+    //tens digit
+    memory[index + 1] = (value / 10) % 10;
+
+    //ones digit
+    memory[index + 2] = value % 10;
+}
