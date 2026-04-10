@@ -112,8 +112,8 @@ void Chip8::LoadROM(char const* filename){
         table8[0x7] = &Chip8::OP_8xy7;
         table8[0xE] = &Chip8::OP_8xyE;
 
-        tableE[0x1] = &Chip8::OP_Ex9E;
-        tableE[0xA] = &Chip8::OP_ExA1;
+        tableE[0x1] = &Chip8::OP_ExA1;
+        tableE[0xA] = &Chip8::OP_Ex9E;
 
         //the F table is the biggest one so we initialize it with a loop and then we fill the rest of the values with the corresponding functions
         // the F table has two variables the last two hex nums ... it could theoretically go upto FF which is 255
@@ -217,7 +217,7 @@ void Chip8::OP_2nnn(){
 /// @brief skip next instruction if Vx = kk
 ///@note The Vx is the register name and kk is the byte value (the 1 byte value in memory)
 void Chip8::OP_3xkk(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u; // we need to shift it to the right by 8 bits to get the value of x (the register number)
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u; // we need to shift it to the right by 8 bits to get the value of x (the register number)
     uint16_t byte = (opcode & 0x00FFu);
 
     if ( registers[Vx] == byte){
@@ -227,7 +227,7 @@ void Chip8::OP_3xkk(){
 
 /// @brief skip next instruction if Vx != kk
 void Chip8::OP_4xkk(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
     uint16_t byte = (opcode & 0x00FFu);
 
     if ( registers[Vx] != byte){
@@ -238,8 +238,8 @@ void Chip8::OP_4xkk(){
 /// @brief skip next instruction if Vx = Vy
 ///@note case where Vx and Vy are both variables and they are the same ...
 void Chip8::OP_5xy0(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;
 
     if ( registers[Vx] == registers[Vy]){
         pc+=2;
@@ -248,7 +248,7 @@ void Chip8::OP_5xy0(){
 
 /// @brief set Vx = kk
 void Chip8::OP_6xkk(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
     uint16_t byte = (opcode & 0x00FFu);
 
     registers[Vx] = byte;
@@ -257,7 +257,7 @@ void Chip8::OP_6xkk(){
 
 /// @brief set Vx = Vx + kk
 void Chip8::OP_7xkk(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
     uint16_t byte = (opcode & 0x00FFu);
 
     registers[Vx] += byte;
@@ -265,32 +265,32 @@ void Chip8::OP_7xkk(){
 
 /// @brief set Vx = Vy
 void Chip8::OP_8xy0(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;
 
     registers[Vx] = registers[Vy];
 }
 
 /// @brief set Vx = Vx OR Vy
 void Chip8::OP_8xy1(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;
 
     registers[Vx]  = registers[Vx] | registers[Vy];
 }
 
 /// @brief set Vx = Vx AND Vy
 void Chip8::OP_8xy2(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;
 
     registers[Vx]  = registers[Vx] & registers[Vy];
 }
 
 /// @brief set Vx = Vx XOR Vy
 void Chip8::OP_8xy3(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;
 
     registers[Vx]  = registers[Vx] ^ registers[Vy];
 }
@@ -298,8 +298,8 @@ void Chip8::OP_8xy3(){
 /// @brief set Vx = Vx + Vy, set VF = carry
 /// @note note the 16th register is conventionally used for different flags in this case the carrry flag
 void Chip8::OP_8xy4(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;
 
     uint16_t sum = registers[Vx] + registers[Vy];
     if ( sum > 255U){
@@ -314,8 +314,8 @@ void Chip8::OP_8xy4(){
 /// @brief set Vx = Vx - Vy, set VF = NOT borrow
 /// @note if Vx > Vy then there is no borrow and we set VF to 1 else we set it to 0 , in this case the VF register acts as a NOT burrow flag 
 void Chip8::OP_8xy5(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;    
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;    
 
     //NOTE that no burrow makes the flag 1 , it's easier for the computer logic that way becasue of 2's complement and stuff
     if ( registers[Vx] > registers[Vy]){
@@ -330,7 +330,7 @@ void Chip8::OP_8xy5(){
 /// @brief set Vx = Vx SHR 1
 /// @note we need to save the least significant bit before shifting to the right because it will be lost after the shift and we need it for the flag register VF
 void Chip8::OP_8xy6(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
 
     //save the LSB into the flag register VF
     registers[0xF] = registers[Vx] & 0x1u;
@@ -343,8 +343,8 @@ void Chip8::OP_8xy6(){
 /// @brief set Vx = Vy - Vx, set VF = NOT borrow
 /// @note same as SUB Vx,Vy , but its Vy-Vx * (not the other way around)
 void Chip8::OP_8xy7(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;
 
     if ( registers[Vy] > registers[Vx]){
         registers[0xF] = 1; // no borrow
@@ -358,7 +358,7 @@ void Chip8::OP_8xy7(){
 /// @brief set Vx = Vx SHL 1
 /// @note If the most-significant bit of Vx is 1, then VF is set to 1, otherwise to 0. Then Vx is multiplied by 2.
 void Chip8::OP_8xyE(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
 
     //save the MSB into the flag register VF
     registers[0xF] = (registers[Vx] & 0x80u) >> 7u;
@@ -370,8 +370,8 @@ void Chip8::OP_8xyE(){
 
 /// @brief skip next instruction if Vx != Vy
 void Chip8::OP_9xy0(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;
     if ( registers[Vx] != registers[Vy]){
         pc+=2;
     }
@@ -400,7 +400,7 @@ void Chip8::OP_Bnnn(){
 
 /// @brief set Vx = random byte AND kk
 void Chip8::OP_Cxkk(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
     uint16_t byte = (opcode & 0x00FFu);
 
     registers[Vx] = randByte(randGen) & byte;
@@ -410,8 +410,8 @@ void Chip8::OP_Cxkk(){
 /// @brief display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision
 /// @note LIterally just draw an image on the screen .
 void Chip8::OP_Dxyn(){
-    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
-    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t Vx = (opcode & 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode & 0x00F0u) >> 4u;
     uint16_t height = opcode & 0x000Fu;
 
     registers[0xF] = 0;
@@ -438,7 +438,7 @@ void Chip8::OP_Dxyn(){
                     registers[0xF] = 1; // collision
                 }
 
-                //on pixels-->off && off pixels --> on (XOR operation)
+                //on pixels-->off & off pixels --> on (XOR operation)
                 *screenPixel ^= 0xFFFFFFFF; // XOR the pixel with white color
             }
         }
