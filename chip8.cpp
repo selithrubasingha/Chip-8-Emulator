@@ -297,6 +297,45 @@ void Chip8::OP_Cxkk(){
 }
 
 
+/// @brief display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision
+/// @note LIterally just draw an image on the screen .
+void Chip8::OP_Dxyn(){
+    uint16_t Vx = (opcode && 0x0F00u) >> 8u;
+    uint16_t Vy = (opcode && 0x00F0u) >> 4u;
+    uint16_t height = opcode & 0x000Fu;
+
+    registers[0xF] = 0;
+
+    //x and y coords are the top left of the sprite
+    uint16_t xPos = registers[Vx] % VIDEO_WIDTH;
+    uint16_t yPos = registers[Vy] % VIDEO_HEIGHT;
+
+    ////height can ba anywhere from 1 to 15 .
+    for (unsigned int row = 0; row < height ; row++){
+        //A spriteByte is literally one row of your sprite.
+        uint8_t spriteByte = memory[index + row];
+
+        for (unsigned int col = 0; col < 8 ; col++){
+            //we use 1000 0000 shifting by col(1-8) to get the specific bit in the row!)
+            uint8_t spritePixel = spriteByte & (0x80u >> col);
+            uint32_t* screenPixel = &video[(yPos + row) * VIDEO_WIDTH + (xPos + col)];
+
+
+            if (spritePixel){
+                
+                //if the screen pixel is already ... we makr in the flag register .
+                if (*screenPixel == 0xFFFFFFFF){
+                    registers[0xF] = 1; // collision
+                }
+
+                //on pixels-->off && off pixels --> on (XOR operation)
+                *screenPixel ^= 0xFFFFFFFF; // XOR the pixel with white color
+            }
+        }
+    }
+
+}
+
 
 
 
