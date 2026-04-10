@@ -156,6 +156,29 @@ void Chip8::OP_NULL() {
     // Do nothing for unknown opcodes
 }
 
+//cycle
+void Chip8::Cycle(){
+    //fetch the opcode
+
+    opcode = (memory[pc] << 8u) | memory[pc+1];
+
+    pc += 2; //increment the pc by 2 to point to the next instruction (cause each instruction is 2 bytes long)
+
+    //decode and execute the opcode 
+
+    //this induces a chain reaction of method calls . remember the () at teh end calls methods
+    (this->*table[(opcode & 0xF000u) >> 12u])();
+
+    //update timers
+    if (delayTimer > 0){
+        delayTimer--;
+    }
+    if (soundTimer > 0){
+        soundTimer--;
+    }
+
+
+}
 
 //ALL THE 34 INSTRUCTION IN THE BASE CHIP 8
 

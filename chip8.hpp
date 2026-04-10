@@ -24,6 +24,7 @@ class Chip8
 
         Chip8();
         void LoadROM(char const* filename);
+        void Cycle();
 
     private:
         std::default_random_engine randGen;
