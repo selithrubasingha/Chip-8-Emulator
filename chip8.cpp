@@ -70,6 +70,28 @@ void Chip8::LoadROM(char const* filename){
     }
 }
 
+
+void Chip8::Table0() {
+    (this->*table0[opcode & 0x000Fu])();
+}
+
+void Chip8::Table8() {
+    (this->*table8[opcode & 0x000Fu])();
+}
+
+void Chip8::TableE() {
+    (this->*tableE[opcode & 0x000Fu])();
+}
+
+void Chip8::TableF() {
+    (this->*tableF[opcode & 0x00FFu])();
+}
+
+void Chip8::OP_NULL() {
+    // Do nothing for unknown opcodes
+}
+
+
 //ALL THE 34 INSTRUCTION IN THE BASE CHIP 8
 
 /// @brief clear the display
@@ -530,4 +552,6 @@ void Chip8::OP_Fx65(){
     }
 
 }
+
+//END OF ALL 34 INSTRUCTIONS
 
