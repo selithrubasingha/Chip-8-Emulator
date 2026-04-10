@@ -515,6 +515,19 @@ void Chip8::OP_Fx55(){
     uint8_t Vx = (opcode & 0x0F00u) >> 8u;
 
     for (uint8_t i = 0; i <= Vx ; i++){
+        //store the registor values into the memory
         memory[index + i] = registers[i];
     }
 }
+
+/// @brief read registers V0 through Vx from memory starting at location I
+void Chip8::OP_Fx65(){
+    uint8_t Vx = (opcode & 0x0F00u) >>8u;
+
+    for (uint8_t i = 0; i <= Vx ; i++){
+        // read the memory values to the registers
+        registers[i] = memory[index + i];
+    }
+
+}
+
