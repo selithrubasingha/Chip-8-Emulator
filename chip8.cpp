@@ -483,3 +483,13 @@ void Chip8::OP_Fx1E(){
 
     index += registers[Vx];
 }
+
+/// @brief set I = location of sprite for digit Vx
+/// @note We know the font characters are located at 0x50, and we know they’re five bytes each, so we can get the address of the first byte of any character by taking an offset from the start address.
+void Chip8::OP_Fx29(){
+
+    uint8_t Vx = (opcode & 0x0F00u) >> 8u;
+
+    //each sprite is 5 bytes long and they start at the address 0x50
+    index = FONTSET_START_ADDRESS + (registers[Vx] * 5);
+}
